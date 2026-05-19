@@ -1,0 +1,78 @@
+*REST yêu cầu dùng danh từ (số nhiều) cho đường dẫn (URL), không dùng động từ là đúng.
+-Ví dụ đúng (API quản lý sinh viên)
++GET /students:lấy danh sách sinh viên
++GET /students/101: lấy sinh viên có ID = 101
+-Ví dụ sai
++GET /getStudents dùng động từ get
++POST /createStudent dùng động từ create
+-2 ví dụ đúng cho API quản lý sinh viên
++GET /students
++DELETE /students/10
+-2 ví dụ sai cho API quản lý sinh viên
++GET /listStudents
++PUT /updateStudent/5
+*Các phương thức HTTP
+| Method | Mục đích chính            | Có body không? (thường) |
+| ------ | ------------------------- | ----------------------- |
+| GET    | Lấy dữ liệu               |  Không                  |
+| POST   | Tạo mới dữ liệu           |  Có                     |
+| PUT    | Cập nhật toàn bộ dữ liệu  |  Có                     |
+| PATCH  | Cập nhật một phần dữ liệu |  Có                     |
+| DELETE | Xóa dữ liệu               |  Thường không           |
+
+*Phân biệt PUT và PATCH qua ví dụ nhỏ
+-Giả sử có sản phẩm ban đầu:
+
+{
+  "id": 1,
+  "name": "Bút bi",
+  "price": 5000
+}
+-Trường hợp PUT
++Request:PUT /products/1
++Body:
+
+{
+  "name": "Bút mực"
+}
+
++Kết quả: Vì PUT là cập nhật toàn bộ tài nguyênnên server hiểu rằng body mới thay thế toàn bộ object.
++Kết quả có thể là:
+
+{
+  "id": 1,
+  "name": "Bút mực",
+  "price": null
+}
+
+hoặc:
+
+{
+  "id": 1,
+  "name": "Bút mực",
+  "price": 0
+}
+
+-Trường hợp PATCH
++Request:PATCH /products/1
++Body:
+
+{
+  "name": "Bút mực"
+}
+
++Kết quả: PATCH chỉ cập nhật field được gửi lên.
+
+-Sự khác biệt
++PUT: cập nhật toàn bộ object
++PATCH: cập nhật một phần object
+*Mã trạng thái HTTP
+| Mã  | Ý nghĩa                                               | Tình huống ví dụ                            |
+| --- | ----------------------------------------------------- | ------------------------------------------- |
+| 200 | OK – xử lý thành công                                 | GET /students trả về danh sách sinh viên    |
+| 201 | Created – tạo mới thành công                          | POST /students tạo sinh viên mới            |
+| 204 | No Content – thành công nhưng không có dữ liệu trả về | DELETE /students/1 xóa thành công           |
+| 400 | Bad Request – request không hợp lệ                    | JSON gửi thiếu trường bắt buộc              |
+| 404 | Not Found – không tìm thấy tài nguyên                 | GET /students/999 nhưng không tồn tại       |
+| 500 | Internal Server Error – lỗi phía server               | Code backend bị exception hoặc lỗi database |
+
