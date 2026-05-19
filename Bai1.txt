@@ -75,4 +75,3 @@ hoặc:
 | 400 | Bad Request – request không hợp lệ                    | JSON gửi thiếu trường bắt buộc              |
 | 404 | Not Found – không tìm thấy tài nguyên                 | GET /students/999 nhưng không tồn tại       |
 | 500 | Internal Server Error – lỗi phía server               | Code backend bị exception hoặc lỗi database |
-
